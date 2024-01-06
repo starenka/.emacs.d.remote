@@ -56,9 +56,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 
-;;(load-user-file "defuns.el")
-;;(load-user-file "global.el")
-
 ;; "y or n" instead of "yes or no"
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -76,9 +73,6 @@
 
 ;; start maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; Show battery stats
-(display-battery-mode t)
 
 ;; don't fuck w/ my scratches
 (setq initial-scratch-message ";; evaluate & print      C-j
@@ -364,6 +358,7 @@
   (switch-to-buffer "*scratch*"))
 
 (global-set-key (kbd "C-q s") 'sta:go-to-scratch-buffer)
+(global-set-key (kbd "C-q j") 'ace-select-window) 
 (global-set-key "\C-c\C-k" 'copy-line)
 (global-set-key (kbd "<f5>") #'deadgrep)
 (global-set-key [?\s-s] #'deadgrep)
