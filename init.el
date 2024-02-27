@@ -56,29 +56,49 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 
+
+(setq
+  inhibit-startup-message t ;; Don't show the startup screen
+  ring-bell-function 'ignore ;; turn off hells & bells
+  column-number-mode t ;; Display line and column numbers
+  backup-directory-alist '(("." . "~/.emacs.d/.tmp/backups/")) ;; Make sure all backup files only live in one place
+  auto-save-file-name-transforms '((".*" "~/.emacs.d/.tmp/auto-saves/" t)) ;; dont litter autosave files
+  auto-save-list-file-prefix "~/.emacs.d/.tmp/auto-saves/.auto-save-list-"
+  bookmark-save-flag 1 ;; save bmarks
+  load-prefer-newer t ;; always get newest files
+  gc-cons-threshold 100000000 ;; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+  ;; gc-cons-threshold most-positive-fixnum
+  redisplay-dont-pause t ;; https://www.masteringemacs.org/article/improving-performance-emacs-display-engine
+  frame-inhibit-implied-size t ;; Don't resize frame as i use tiling manager (saves startup time)
+  read-process-output-max (* 1024 1024) ;; 1mb https://emacs-lsp.github.io/lsp-mode/page/performance/
+  auto-window-vscroll nil ;; https://emacs.stackexchange.com/a/28746
+  tab-stop-list (number-sequence 4 200 4)
+  indent-line-function 'insert-tab
+  windmove-wrap-around t
+  warning-minimum-level :error ;; don't shout at me if not necessary (esp. native-comp is loud)
+  initial-scratch-message
+  (concat ";; evaluate & print      C-j\n"
+          ";; evaluate defun        C-M-x\n\n"
+           ) ;; don't fuck w/ my scratches
+)
+
+
+(setq-default
+ bidi-display-reordering nil  ;; should speedup long lines rendering https://emacs.stackexchange.com/a/603
+ abbrev-mode nil
+ indent-tabs-mode nil
+ tab-width 4
+ kill-read-only-ok t ;; sta:copy-line (see defuns)
+)
+
 ;; "y or n" instead of "yes or no"
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; Don't show the startup screen
-(setq inhibit-startup-message t)
-
-;; turn of hells bells
-(setq ring-bell-function 'ignore)
 
 ;; no menu bar
 (menu-bar-mode -1)
 
-;; no toolbar
-(tool-bar-mode -1)
-
 ;; start maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; don't fuck w/ my scratches
-(setq initial-scratch-message ";; evaluate & print      C-j
-;; evaluate defun        C-M-x
-
-")
 
 ;; save on exit
 (desktop-save-mode 1)
@@ -86,16 +106,8 @@
 ;; sync buffers on disk change
 (global-auto-revert-mode t)
 
-;; display line and column numbers
-(setq column-number-mode  t)
-
 ;; show mathing paren
 (show-paren-mode t)
-
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq tab-stop-list (number-sequence 4 200 4))
-(setq indent-line-function 'insert-tab)
 
 (global-unset-key (kbd "C-q"))
 
